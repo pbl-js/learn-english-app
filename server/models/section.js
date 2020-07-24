@@ -11,6 +11,12 @@ const sectionSchema = new Schema({
     type: String,
     required: true,
   },
+  topics: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Topic",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Section", sectionSchema);

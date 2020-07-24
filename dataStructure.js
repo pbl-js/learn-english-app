@@ -75,29 +75,29 @@ const user = {
   password: "password",
 };
 
-const learningProgressTopics = {
+const learningProgressTopic = {
   userId: "id",
   topicId: "id",
   lastUpdate: "date",
   unlock: false,
-  started: true,
-  passed: true,
-  mastering: true,
+  started: false,
+  passed: false,
+  mastering: false,
   learningProgress: {
-    value: 20,
+    value: 0,
     total: 20,
   },
   masteringProgress: {
-    value: 20,
+    value: 0,
     total: 20,
   },
 };
 
-const learningProgressWords = {
+const learningProgressWord = {
   userId: "id",
   wordId: "id",
   lastUpdate: "date",
-  unlock: false,
+  seen: false,
   started: true,
   passed: true,
   mastering: true,

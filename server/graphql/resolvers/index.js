@@ -1,7 +1,7 @@
-// const authResolver = require("./auth");
+const SectionsResolver = require("./sections");
 
 const rootResolver = {
-  //   ...authResolver,
+  ...SectionsResolver,
 };
 
 module.exports = rootResolver;
