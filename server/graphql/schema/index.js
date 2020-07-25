@@ -8,6 +8,7 @@ type Section {
   _id: ID!
   title: String!
   color: String!
+  topics: [Topic!]!
 }
 
 type Topic {
@@ -57,6 +58,8 @@ input TopicInput {
 
 type RootQuery {
     sections: [Section!]!
+    topics: [Topic!]!
+    singleTopic(topicId: ID!): Topic
     login(email: String!, password: String!): AuthData!
 }
 

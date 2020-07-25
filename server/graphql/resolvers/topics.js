@@ -1,4 +1,5 @@
 const Topic = require("../../models/topic");
+const Section = require("../../models/section");
 const { transformTopic } = require("./merge");
 
 module.exports = {
@@ -14,6 +15,17 @@ module.exports = {
     }
   },
 
+  singleTopic: async (args) => {
+    try {
+      const topic = await Topic.findById(args.topicId);
+      console.log(topic);
+
+      return transformTopic(topic);
+    } catch (err) {
+      throw err;
+    }
+  },
+
   createTopic: async (args) => {
     const topic = new Topic({
       section: args.topicInput.section,
@@ -23,10 +35,14 @@ module.exports = {
 
     try {
       const result = await topic.save();
-      console.log(result);
 
       const createdTopic = transformTopic(result);
-      console.log(createdTopic);
+
+      const section = await Section.findById(args.topicInput.section);
+
+      section.topics.push(result.id);
+
+      await section.save();
 
       return createdTopic;
     } catch (err) {

@@ -1,4 +1,5 @@
 const Section = require("../../models/section");
+const Topic = require("../../models/topic");
 
 const singleSection = async (sectionId) => {
   try {
@@ -9,10 +10,23 @@ const singleSection = async (sectionId) => {
   }
 };
 
+const topics = async (topicIds) => {
+  try {
+    const topics = await Topic.find({ _id: { $in: topicIds } });
+
+    return topics.map((topic) => {
+      return transformTopic(topic);
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
 const transformSection = (section) => {
   return {
     ...section._doc,
     _id: section.id.toString(),
+    topics: () => topics(section.topics),
   };
 };
 
