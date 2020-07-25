@@ -18,7 +18,17 @@ const topicSchema = new Schema({
     required: true,
   },
 
-  totalWords: Number,
+  totalWords: {
+    type: Number,
+    default: 0,
+  },
+
+  words: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Word",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Topic", topicSchema);

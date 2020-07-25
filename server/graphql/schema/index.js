@@ -16,6 +16,7 @@ type Topic {
   section: Section!
   title: String!
   img: String!
+  words: [Word!]!
 }
 
 type Word {

@@ -33,6 +33,18 @@ const singleTopic = async (topicId) => {
   }
 };
 
+const words = async (wordIds) => {
+  try {
+    const words = await Word.find({ _id: { $in: wordIds } });
+
+    return words.map((word) => {
+      return transformWord(word);
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
 const transformSection = (section) => {
   return {
     ...section._doc,
@@ -46,6 +58,7 @@ const transformTopic = (topic) => {
     ...topic._doc,
     _id: topic.id.toString(),
     section: () => singleSection(topic._doc.section),
+    words: () => words(topic._doc.words),
   };
 };
 

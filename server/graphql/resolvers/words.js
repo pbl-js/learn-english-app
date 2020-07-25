@@ -1,4 +1,5 @@
 const Word = require("../../models/word");
+const Topic = require("../../models/topic");
 const { transformWord } = require("./merge");
 
 module.exports = {
@@ -26,28 +27,17 @@ module.exports = {
       const result = await word.save();
 
       const createdWord = transformWord(result);
-      console.log(createdWord);
+
+      const topic = await Topic.findById(args.wordInput.topic);
+
+      topic.words.push(result.id);
+      topic.totalWords = topic.totalWords + 1;
+
+      await topic.save();
 
       return createdWord;
     } catch (err) {
       throw err;
     }
   },
-
-  //   createSection: async (args) => {
-  //     const section = new Section({
-  //       title: args.sectionInput.title,
-  //       color: args.sectionInput.color,
-  //     });
-
-  //     try {
-  //       const result = await section.save();
-
-  //       const createdSection = transformSection(result);
-
-  //       return createdSection;
-  //     } catch (err) {
-  //       throw err;
-  //     }
-  //   },
 };
