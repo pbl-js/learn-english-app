@@ -1,5 +1,8 @@
 const { buildSchema } = require("graphql");
 
+// totalWords: Int!
+// words: [Word!]!
+
 module.exports = buildSchema(`
 type Section {
   _id: ID!
@@ -12,8 +15,6 @@ type Topic {
   section: Section!
   title: String!
   img: String!
-  totalWords: Int!
-  words: [Word!]!
 }
 
 type Word {
@@ -47,6 +48,13 @@ input SectionInput {
   color: String!
 }
 
+input TopicInput {
+  title: String!
+  section: ID!
+  img: String!
+
+}
+
 type RootQuery {
     sections: [Section!]!
     login(email: String!, password: String!): AuthData!
@@ -54,6 +62,7 @@ type RootQuery {
 
 type RootMutation {
   createSection(sectionInput: SectionInput): Section!
+  createTopic(topicInput: TopicInput): Topic!
   createUser(userInput: UserInput): User
 }
 
