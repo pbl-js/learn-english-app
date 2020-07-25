@@ -1,5 +1,4 @@
 const Section = require("../../models/section");
-const { dateToString } = require("../../helpers/date");
 const { transformSection } = require("./merge");
 
 module.exports = {

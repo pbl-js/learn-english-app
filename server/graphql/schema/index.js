@@ -20,9 +20,8 @@ type Topic {
 
 type Word {
   _id: ID!
-  section: Section!
-  img: String!
   topic: Topic!
+  img: String!
   eng: String!
   pl: String!
 }
@@ -53,12 +52,19 @@ input TopicInput {
   title: String!
   section: ID!
   img: String!
+}
 
+input WordInput {
+  topic: ID!
+  img: String!
+  eng: String!
+  pl: String!
 }
 
 type RootQuery {
     sections: [Section!]!
     topics: [Topic!]!
+    words: [Word!]!
     singleTopic(topicId: ID!): Topic
     login(email: String!, password: String!): AuthData!
 }
@@ -66,6 +72,7 @@ type RootQuery {
 type RootMutation {
   createSection(sectionInput: SectionInput): Section!
   createTopic(topicInput: TopicInput): Topic!
+  createWord(wordInput: WordInput): Word!
   createUser(userInput: UserInput): User
 }
 

@@ -1,5 +1,6 @@
 const Section = require("../../models/section");
 const Topic = require("../../models/topic");
+const Word = require("../../models/word");
 
 const singleSection = async (sectionId) => {
   try {
@@ -22,6 +23,16 @@ const topics = async (topicIds) => {
   }
 };
 
+const singleTopic = async (topicId) => {
+  try {
+    const topic = await Topic.findById(topicId);
+
+    return transformTopic(topic);
+  } catch (err) {
+    throw err;
+  }
+};
+
 const transformSection = (section) => {
   return {
     ...section._doc,
@@ -38,5 +49,14 @@ const transformTopic = (topic) => {
   };
 };
 
+const transformWord = (word) => {
+  return {
+    ...word._doc,
+    _id: word.id.toString(),
+    topic: () => singleTopic(word._doc.topic),
+  };
+};
+
 exports.transformSection = transformSection;
 exports.transformTopic = transformTopic;
+exports.transformWord = transformWord;
