@@ -1,6 +1,9 @@
 const Topic = require("../../models/topic");
 const Section = require("../../models/section");
+const TopicUserProgress = require("../../models/topicUserProgress");
 const { transformTopic } = require("./merge");
+
+const testUser = "5f1ebe5b9611697161dd7f25";
 
 module.exports = {
   topics: async () => {
@@ -8,7 +11,7 @@ module.exports = {
       const topics = await Topic.find();
 
       return topics.map((topic) => {
-        return transformTopic(topic);
+        return transformTopic(topic, testUser);
       });
     } catch (err) {
       throw err;
@@ -18,9 +21,8 @@ module.exports = {
   singleTopic: async (args) => {
     try {
       const topic = await Topic.findById(args.topicId);
-      console.log(topic);
 
-      return transformTopic(topic);
+      return transformTopic(topic, testUser);
     } catch (err) {
       throw err;
     }
@@ -38,11 +40,20 @@ module.exports = {
 
       const createdTopic = transformTopic(result);
 
+      // Add relation to section
       const section = await Section.findById(args.topicInput.section);
-
       section.topics.push(result.id);
-
       await section.save();
+
+      // Generate new topicUserProgress
+      const topicUserProgress = new TopicUserProgress({
+        userId: testUser,
+        topicId: result.id,
+        learningTotal: 100,
+        masteringTotal: 100,
+      });
+
+      await topicUserProgress.save();
 
       return createdTopic;
     } catch (err) {

@@ -1,6 +1,7 @@
 const Section = require("../../models/section");
 const Topic = require("../../models/topic");
 const Word = require("../../models/word");
+const TopicUserProgress = require("../../models/topicUserProgress");
 
 const singleSection = async (sectionId) => {
   try {
@@ -18,6 +19,18 @@ const topics = async (topicIds) => {
     return topics.map((topic) => {
       return transformTopic(topic);
     });
+  } catch (err) {
+    throw err;
+  }
+};
+
+const topicUserProgress = async (userId, topicId) => {
+  try {
+    const topicUserProgress = await TopicUserProgress.findOne({
+      userId: { $in: userId },
+      topicId: { $in: topicId },
+    });
+    return transformTopicUserProgress(topicUserProgress);
   } catch (err) {
     throw err;
   }
@@ -53,12 +66,21 @@ const transformSection = (section) => {
   };
 };
 
-const transformTopic = (topic) => {
+const transformTopic = (topic, userId) => {
   return {
     ...topic._doc,
     _id: topic.id.toString(),
     section: () => singleSection(topic._doc.section),
     words: () => words(topic._doc.words),
+    progress: () => topicUserProgress(userId, topic.id),
+  };
+};
+
+const transformTopicUserProgress = (topic) => {
+  return {
+    ...topic._doc,
+    _id: topic.id.toString(),
+    topic: () => singleTopic(topic._doc.topic),
   };
 };
 
@@ -73,3 +95,4 @@ const transformWord = (word) => {
 exports.transformSection = transformSection;
 exports.transformTopic = transformTopic;
 exports.transformWord = transformWord;
+exports.transformTopicUserProgress = transformTopicUserProgress;

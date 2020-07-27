@@ -4,6 +4,10 @@ const { buildSchema } = require("graphql");
 // words: [Word!]!
 
 module.exports = buildSchema(`
+type Progress {
+  value: Int!
+  total: Int!
+}
 type Section {
   _id: ID!
   title: String!
@@ -17,6 +21,19 @@ type Topic {
   title: String!
   img: String!
   words: [Word!]!
+  progress: TopicUserProgress!
+}
+
+type TopicUserProgress {
+  topic: Topic!
+  unlock: Boolean!
+  started: Boolean!
+  passed: Boolean!
+  mastering: Boolean!
+  learningValue: Int!
+  learningTotal: Int!
+  masteringValue: Int!
+  masteringTotal: Int!
 }
 
 type Word {
@@ -65,6 +82,7 @@ input WordInput {
 type RootQuery {
     sections: [Section!]!
     topics: [Topic!]!
+    topicsUserProgress: [TopicUserProgress!]!
     words: [Word!]!
     singleTopic(topicId: ID!): Topic
     login(email: String!, password: String!): AuthData!
