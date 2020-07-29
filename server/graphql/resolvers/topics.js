@@ -4,26 +4,36 @@ const User = require("../../models/user");
 const TopicUserProgress = require("../../models/topicUserProgress");
 const { transformTopic } = require("./merge");
 
-const testUser = "5f1ed31f7d0297757d838494";
-
 module.exports = {
-  topics: async () => {
+  topics: async (args, req) => {
     try {
       const topics = await Topic.find();
 
       return topics.map((topic) => {
-        return transformTopic(topic, testUser);
+        const transformTopicData = {
+          topic,
+          userId: req.userId,
+          isAuth: req.isAuth,
+        };
+
+        return transformTopic(transformTopicData);
       });
     } catch (err) {
       throw err;
     }
   },
 
-  singleTopic: async (args) => {
+  singleTopic: async (args, req) => {
     try {
       const topic = await Topic.findById(args.topicId);
 
-      return transformTopic(topic, testUser);
+      const transformTopicData = {
+        topic,
+        userId: req.userId,
+        isAuth: req.isAuth,
+      };
+
+      return transformTopic(transformTopicData);
     } catch (err) {
       throw err;
     }
@@ -39,7 +49,13 @@ module.exports = {
     try {
       const result = await topic.save();
 
-      const createdTopic = transformTopic(result);
+      const transformTopicData = {
+        topic: result,
+        userId: req.userId,
+        isAuth: req.isAuth,
+      };
+
+      const createdTopic = transformTopic(transformTopicData);
 
       // Add relation to section
       const section = await Section.findById(args.topicInput.section);

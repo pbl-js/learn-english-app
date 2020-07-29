@@ -24,7 +24,11 @@ const topics = async (topicIds) => {
   }
 };
 
-const topicUserProgress = async (userId, topicId) => {
+const topicUserProgress = async ({ topicId, isAuth, userId }) => {
+  if (!isAuth) {
+    throw new Error("Unauthenticated!");
+  }
+
   try {
     const topicUserProgress = await TopicUserProgress.findOne({
       userId: { $in: userId },
@@ -66,13 +70,13 @@ const transformSection = (section) => {
   };
 };
 
-const transformTopic = (topic, userId) => {
+const transformTopic = ({ topic, isAuth, userId }) => {
   return {
     ...topic._doc,
     _id: topic.id.toString(),
     section: () => singleSection(topic._doc.section),
     words: () => words(topic._doc.words),
-    progress: () => topicUserProgress(userId, topic.id),
+    progress: () => topicUserProgress({ topicId: topic.id, isAuth, userId }),
   };
 };
 
