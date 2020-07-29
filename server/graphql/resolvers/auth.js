@@ -1,6 +1,8 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/user");
+const Topic = require("../../models/topic");
+const TopicUserProgress = require("../../models/topicUserProgress");
 
 module.exports = {
   createUser: async (args) => {
@@ -20,6 +22,21 @@ module.exports = {
 
       const result = await user.save();
 
+      // Create topicUserProgress for all topics
+      const allTopics = await Topic.find();
+
+      for (const topic of allTopics) {
+        const topicUserProgress = new TopicUserProgress({
+          userId: result.id,
+          topicId: topic.id,
+          learningTotal: 100,
+          masteringTotal: 100,
+        });
+
+        await topicUserProgress.save();
+      }
+
+      // GraphQL resault
       return { ...result._doc, password: null, _id: result.id };
     } catch (err) {
       throw err;

@@ -1,9 +1,10 @@
 const Topic = require("../../models/topic");
 const Section = require("../../models/section");
+const User = require("../../models/user");
 const TopicUserProgress = require("../../models/topicUserProgress");
 const { transformTopic } = require("./merge");
 
-const testUser = "5f1ebe5b9611697161dd7f25";
+const testUser = "5f1ed31f7d0297757d838494";
 
 module.exports = {
   topics: async () => {
@@ -45,16 +46,20 @@ module.exports = {
       section.topics.push(result.id);
       await section.save();
 
-      // Generate new topicUserProgress
-      const topicUserProgress = new TopicUserProgress({
-        userId: testUser,
-        topicId: result.id,
-        learningTotal: 100,
-        masteringTotal: 100,
-      });
+      // Generate new topicUserProgress for all users
+      const allUsers = await User.find();
 
-      await topicUserProgress.save();
+      for (const user of allUsers) {
+        const topicUserProgress = new TopicUserProgress({
+          userId: user.id,
+          topicId: result.id,
+          learningTotal: 100,
+          masteringTotal: 100,
+        });
 
+        await topicUserProgress.save();
+      }
+      // GraphQL return
       return createdTopic;
     } catch (err) {
       throw err;
