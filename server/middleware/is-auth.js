@@ -28,8 +28,9 @@ module.exports = (req, res, next) => {
     req.isAuth = false;
     return next();
   }
-
+  console.log(decodedToken);
   req.isAuth = true;
+  req.accessLevel = decodedToken.accessLevel;
   req.userId = decodedToken.userId;
   next();
 };

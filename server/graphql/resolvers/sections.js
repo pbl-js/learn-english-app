@@ -14,7 +14,11 @@ module.exports = {
     }
   },
 
-  createSection: async (args) => {
+  createSection: async (args, req) => {
+    if (req.accessLevel < 10 && req.isAuth) {
+      throw new Error("Unauthenticated!");
+    }
+
     const section = new Section({
       title: args.sectionInput.title,
       color: args.sectionInput.color,

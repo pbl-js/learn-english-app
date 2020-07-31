@@ -39,7 +39,11 @@ module.exports = {
     }
   },
 
-  createTopic: async (args) => {
+  createTopic: async (args, req) => {
+    if (req.accessLevel < 10 && req.isAuth) {
+      throw new Error("Unauthenticated!");
+    }
+
     const topic = new Topic({
       section: args.topicInput.section,
       title: args.topicInput.title,

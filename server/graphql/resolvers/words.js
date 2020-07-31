@@ -15,7 +15,11 @@ module.exports = {
     }
   },
 
-  createWord: async (args) => {
+  createWord: async (args, req) => {
+    if (req.accessLevel < 10 && req.isAuth) {
+      throw new Error("Unauthenticated!");
+    }
+
     try {
       const word = new Word({
         topic: args.wordInput.topic,

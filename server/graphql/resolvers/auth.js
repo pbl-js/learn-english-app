@@ -37,7 +37,11 @@ module.exports = {
       }
 
       // GraphQL resault
-      return { ...result._doc, password: null, _id: result.id };
+      return {
+        ...result._doc,
+        password: null,
+        _id: result.id,
+      };
     } catch (err) {
       throw err;
     }
@@ -57,13 +61,17 @@ module.exports = {
     }
 
     const token = jwt.sign(
-      { userId: user.id, email: user.email },
+      { userId: user.id, email: user.email, accessLevel: user.accessLevel },
       "somesupersecretkey",
       {
         expiresIn: "1hr",
       }
     );
 
-    return { userId: user.id, token: token, tokenExpiration: 1 };
+    return {
+      userId: user.id,
+      token: token,
+      tokenExpiration: 1,
+    };
   },
 };
