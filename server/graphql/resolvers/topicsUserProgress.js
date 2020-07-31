@@ -2,7 +2,7 @@ const Topic = require("../../models/topic");
 const Section = require("../../models/section");
 
 const TopicUserProgress = require("../../models/topicUserProgress");
-const { transformTopicUserProgress } = require("./merge");
+const { transformTopicUserProgress } = require("../merge/topicUserProgress");
 
 module.exports = {
   topicsUserProgress: async () => {

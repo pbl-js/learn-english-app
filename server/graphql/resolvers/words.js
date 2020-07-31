@@ -1,6 +1,6 @@
 const Word = require("../../models/word");
 const Topic = require("../../models/topic");
-const { transformWord } = require("./merge");
+const { transformWord } = require("../merge/word");
 
 module.exports = {
   words: async () => {
