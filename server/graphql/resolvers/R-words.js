@@ -1,6 +1,6 @@
 const Word = require("../../models/word");
 const Topic = require("../../models/topic");
-const { transformWord } = require("../merge/word");
+const { transformWord } = require("../merge/M-word");
 
 module.exports = {
   words: async () => {
@@ -16,7 +16,7 @@ module.exports = {
   },
 
   createWord: async (args, req) => {
-    if (req.accessLevel < 10 && req.isAuth) {
+    if (req.authData.accessLevel < 10 && req.authData.isAuth) {
       throw new Error("Unauthenticated!");
     }
 

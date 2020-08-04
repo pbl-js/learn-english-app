@@ -2,7 +2,7 @@ const Topic = require("../../models/topic");
 const Section = require("../../models/section");
 const User = require("../../models/user");
 const TopicUserProgress = require("../../models/topicUserProgress");
-const { transformTopic } = require("../merge/topic");
+const { transformTopic } = require("../merge/M-topic");
 
 module.exports = {
   topics: async (args, req) => {
@@ -10,13 +10,7 @@ module.exports = {
       const topics = await Topic.find();
 
       return topics.map((topic) => {
-        const transformTopicData = {
-          topic,
-          userId: req.userId,
-          isAuth: req.isAuth,
-        };
-
-        return transformTopic(transformTopicData);
+        return transformTopic(topic, req.authData, args.filter);
       });
     } catch (err) {
       throw err;
@@ -27,13 +21,7 @@ module.exports = {
     try {
       const topic = await Topic.findById(args.topicId);
 
-      const transformTopicData = {
-        topic,
-        userId: req.userId,
-        isAuth: req.isAuth,
-      };
-
-      return transformTopic(transformTopicData);
+      return transformTopic(topic, req.authData, args.filter);
     } catch (err) {
       throw err;
     }
@@ -53,13 +41,7 @@ module.exports = {
     try {
       const result = await topic.save();
 
-      const transformTopicData = {
-        topic: result,
-        userId: req.userId,
-        isAuth: req.isAuth,
-      };
-
-      const createdTopic = transformTopic(transformTopicData);
+      const createdTopic = transformTopic(result, req.authData, args.filter);
 
       // Add relation to section
       const section = await Section.findById(args.topicInput.section);

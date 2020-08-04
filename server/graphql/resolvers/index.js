@@ -1,8 +1,8 @@
-const SectionsResolver = require("./sections");
-const TopicsResolver = require("./topics");
-const WordsResolver = require("./words");
-const TopicsUserProgress = require("./topicsUserProgress");
-const AuthResolver = require("./auth");
+const SectionsResolver = require("./R-sections");
+const TopicsResolver = require("./R-topics");
+const WordsResolver = require("./R-words");
+const TopicsUserProgress = require("./R-topicsUserProgress");
+const AuthResolver = require("./R-auth");
 
 const rootResolver = {
   ...AuthResolver,

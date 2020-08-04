@@ -1,7 +1,7 @@
 const Word = require("../../models/word");
-const { singleTopic } = require("./topic");
+const { singleTopic } = require("./M-topic");
 
-const words = async (wordIds) => {
+const words = async (wordIds, authData, filter) => {
   try {
     const words = await Word.find({ _id: { $in: wordIds } });
 
@@ -13,11 +13,11 @@ const words = async (wordIds) => {
   }
 };
 
-const transformWord = (word) => {
+const transformWord = (word, authData, filter) => {
   return {
     ...word._doc,
     _id: word.id.toString(),
-    topic: () => singleTopic(word._doc.topic),
+    topic: () => singleTopic(word._doc.topic, authData, filter),
   };
 };
 

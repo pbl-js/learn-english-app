@@ -1,19 +1,23 @@
 const TopicUserProgress = require("../../models/topicUserProgress");
-const { transformTopicUserProgress } = require("../merge/topicUserProgress");
+const { transformTopicUserProgress } = require("../merge/M-topicUserProgress");
 
 module.exports = {
   topicsUserProgress: async (args, req) => {
-    if (!req.isAuth) {
+    if (!req.authData.isAuth) {
       throw new Error("Unauthenticated!");
     }
 
     try {
       const topicsUserProgress = await TopicUserProgress.find({
-        userId: { $in: req.userId },
+        userId: { $in: req.authData.userId },
       });
 
       return topicsUserProgress.map((topicUserProgress) => {
-        return transformTopicUserProgress(topicUserProgress);
+        return transformTopicUserProgress(
+          topicUserProgress,
+          req.authData,
+          args.filter
+        );
       });
     } catch (err) {
       throw err;

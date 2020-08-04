@@ -1,13 +1,13 @@
 const Section = require("../../models/section");
-const { transformSection } = require("../merge/section");
+const { transformSection } = require("../merge/M-section");
 
 module.exports = {
-  sections: async () => {
+  sections: async (args, req) => {
     try {
       const sections = await Section.find();
 
       return sections.map((section) => {
-        return transformSection(section);
+        return transformSection(section, req.authData, args.filter);
       });
     } catch (err) {
       throw err;
@@ -15,7 +15,7 @@ module.exports = {
   },
 
   createSection: async (args, req) => {
-    if (req.accessLevel < 10 && req.isAuth) {
+    if (req.authData.accessLevel < 10 && req.authData.isAuth) {
       throw new Error("Unauthenticated!");
     }
 
