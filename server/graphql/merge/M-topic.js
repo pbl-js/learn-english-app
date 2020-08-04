@@ -15,7 +15,7 @@ const topics = async (topicIds, authData, filter) => {
   }
 };
 
-const singleTopic = async (topicId, authData, filter) => {
+module.exports.singleTopic = async (topicId, authData, filter) => {
   try {
     const topic = await Topic.findById(topicId);
 
@@ -35,6 +35,6 @@ const transformTopic = (topic, authData, filter) => {
   };
 };
 
-exports.singleTopic = singleTopic;
+// exports.singleTopic = singleTopic;
 exports.topics = topics;
 exports.transformTopic = transformTopic;
