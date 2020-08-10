@@ -1,5 +1,5 @@
 const TopicUserProgress = require("../../models/topicUserProgress");
-const { transformTopicUserProgress } = require("../merge/M-topicUserProgress");
+const transformTopicUserProgress = require("../merge/topicUserProgress/transformTopicUserProgress");
 
 module.exports = {
   topicsUserProgress: async (args, req) => {

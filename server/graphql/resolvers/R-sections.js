@@ -1,5 +1,5 @@
 const Section = require("../../models/section");
-const { transformSection } = require("../merge/M-section");
+const transformSection = require("../merge/section/transformSection");
 
 module.exports = {
   sections: async (args, req) => {

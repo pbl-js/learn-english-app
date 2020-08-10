@@ -1,3 +1,8 @@
+const rangi = [
+  { point: 1, name: "SuperAdmin" },
+  { point: 5, name: "User" },
+];
+
 const state = {
   sections: [
     {
@@ -61,7 +66,6 @@ const topic = {
 };
 
 const word = {
-  section: "id",
   topic: "id",
 
   eng: "bread",
@@ -73,11 +77,12 @@ const user = {
   id: "id",
   email: "email",
   password: "password",
+  topics,
 };
 
-const learningProgressTopic = {
-  userId: "id",
-  topicId: "id",
+const TopicUserProgress = {
+  user: "id",
+  topic: "id",
   lastUpdate: "date",
   unlock: false,
   started: false,
@@ -91,11 +96,13 @@ const learningProgressTopic = {
     value: 0,
     total: 20,
   },
+  learningWords: [],
 };
 
-const learningProgressWord = {
-  userId: "id",
-  wordId: "id",
+const WordUserProgress = {
+  user: "id",
+  word: "id",
+  topic: "id",
   lastUpdate: "date",
   seen: false,
   started: true,
