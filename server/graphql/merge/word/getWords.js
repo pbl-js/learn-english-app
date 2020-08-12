@@ -1,7 +1,7 @@
-const Word = require("../../../models/word");
-const transformWord = require("./transformWord");
+import Word from "../../../models/word.js";
+import transformWord from "./transformWord.js";
 
-module.exports.words = async (wordIds, authData, filter) => {
+export default words = async (wordIds, authData, filter) => {
   try {
     const words = await Word.find({ _id: { $in: wordIds } });
 

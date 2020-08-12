@@ -1,10 +1,10 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../../models/user");
-const Topic = require("../../models/topic");
-const TopicUserProgress = require("../../models/topicUserProgress");
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../../models/user.js";
+import Topic from "../../models/topic.js";
+import TopicUserProgress from "../../models/topicUserProgress.js";
 
-module.exports = {
+export default {
   createUser: async (args) => {
     try {
       const userExist = await User.findOne({ email: args.userInput.email });

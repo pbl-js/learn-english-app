@@ -1,6 +1,6 @@
-const singleTopic = require("../topic/getSingleTopic");
+import singleTopic from "../topic/getSingleTopic.js";
 
-module.exports.transformWord = (word, authData, filter) => {
+export default (word, authData, filter) => {
   return {
     ...word._doc,
     _id: word.id.toString(),

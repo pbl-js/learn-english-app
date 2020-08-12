@@ -1,7 +1,7 @@
-const TopicUserProgress = require("../../models/topicUserProgress");
-const transformTopicUserProgress = require("../merge/topicUserProgress/transformTopicUserProgress");
+import TopicUserProgress from "../../models/topicUserProgress.js";
+import transformTopicUserProgress from "../merge/topicUserProgress/transformTopicUserProgress.js";
 
-module.exports = {
+export default {
   topicsUserProgress: async (args, req) => {
     if (!req.authData.isAuth) {
       throw new Error("Unauthenticated!");

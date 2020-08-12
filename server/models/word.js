@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -24,4 +24,4 @@ const wordSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("Word", wordSchema);
+export default mongoose.model("Word", wordSchema);

@@ -1,18 +1,17 @@
-const { buildSchema } = require("graphql");
+import pkg from "graphql";
 
-// totalWords: Int!
-// words: [Word!]!
+const { buildSchema } = pkg;
 
-module.exports = buildSchema(`
+const schema = buildSchema(`
 type Progress {
   value: Int!
   total: Int!
 }
+
 type Section {
   _id: ID!
   title: String!
   color: String!
-  topics: [Topic!]!
 }
 
 type Topic {
@@ -20,8 +19,6 @@ type Topic {
   section: Section!
   title: String!
   img: String!
-  words: [Word!]!
-  progress: TopicUserProgress!
 }
 
 type TopicUserProgress {
@@ -30,18 +27,27 @@ type TopicUserProgress {
   started: Boolean!
   passed: Boolean!
   mastering: Boolean!
-  learningValue: Int!
-  learningTotal: Int!
-  masteringValue: Int!
-  masteringTotal: Int!
+  learningProgress: Progress!
+  masteringProgress: Progress!
 }
 
 type Word {
   _id: ID!
+  section: Section!
   topic: Topic!
   img: String!
   eng: String!
   pl: String!
+}
+
+type WordUserProgress {
+  word: Word!
+  topic: Topic!
+  started: Boolean!
+  passed: Boolean!
+  mastering: Boolean!
+  learningProgress: Progress!
+  masteringProgress: Progress!
 }
 
 type User {
@@ -100,3 +106,5 @@ schema {
     mutation: RootMutation
 }
 `);
+
+export default schema;

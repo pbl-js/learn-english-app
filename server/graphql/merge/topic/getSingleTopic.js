@@ -1,7 +1,7 @@
-const Topic = require("../../../models/topic");
-const transformTopic = require("./transformTopic");
+import Topic from "../../../models/topic.js";
+import transformTopic from "./transformTopic.js";
 
-module.exports.singleTopic = async (topicId, authData, filter) => {
+export default async (topicId, authData, filter) => {
   try {
     const topic = await Topic.findById(topicId);
 

@@ -1,10 +1,6 @@
-const singleTopic = require("../topic/getSingleTopic");
+import singleTopic from "../topic/getSingleTopic.js";
 
-module.exports.transformTopicUserProgress = (
-  topicUserProgress,
-  authData,
-  filter
-) => {
+export default (topicUserProgress, authData, filter) => {
   return {
     ...topicUserProgress._doc,
     _id: topicUserProgress.id.toString(),

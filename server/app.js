@@ -1,13 +1,18 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
+import express from "express";
+import pkg from "express-graphql";
+import morgan from "morgan";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
 
-const { graphqlHTTP } = require("express-graphql");
-const graphQlSchema = require("./graphql/schema/index");
-const graphQlResolvers = require("./graphql/resolvers/index");
-const isAuth = require("./middleware/is-auth");
+// import { graphqlHTTP } from "express-graphql";
+const { graphqlHTTP } = pkg;
+import graphQlSchema from "./graphql/schema/index.js";
+import graphQlResolvers from "./graphql/resolvers/index.js";
+import isAuth from "./middleware/is-auth.js";
 
 const app = express();
+
+app.use(morgan("dev"));
 
 app.use(bodyParser.json());
 

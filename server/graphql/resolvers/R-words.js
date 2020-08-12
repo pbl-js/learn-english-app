@@ -1,8 +1,8 @@
-const Word = require("../../models/word");
-const Topic = require("../../models/topic");
-const transformWord = require("../merge/word/transformWord");
+import Word from "../../models/word.js";
+import Topic from "../../models/topic.js";
+import transformWord from "../merge/word/transformWord.js";
 
-module.exports = {
+export default {
   words: async () => {
     try {
       const words = await Word.find();

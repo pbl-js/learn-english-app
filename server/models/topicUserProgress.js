@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -50,4 +50,4 @@ const topicUserProgressSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("TopicUserProgress", topicUserProgressSchema);
+export default mongoose.model("TopicUserProgress", topicUserProgressSchema);

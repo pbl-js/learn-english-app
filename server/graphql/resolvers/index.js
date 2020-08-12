@@ -1,8 +1,8 @@
-const SectionsResolver = require("./R-sections");
-const TopicsResolver = require("./R-topics");
-const WordsResolver = require("./R-words");
-const TopicsUserProgress = require("./R-topicsUserProgress");
-const AuthResolver = require("./R-auth");
+import SectionsResolver from "./R-sections.js";
+import TopicsResolver from "./R-topics.js";
+import WordsResolver from "./R-words.js";
+import TopicsUserProgress from "./R-topicsUserProgress.js";
+import AuthResolver from "./R-auth.js";
 
 const rootResolver = {
   ...AuthResolver,
@@ -12,4 +12,4 @@ const rootResolver = {
   ...TopicsUserProgress,
 };
 
-module.exports = rootResolver;
+export default rootResolver;

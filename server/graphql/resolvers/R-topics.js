@@ -1,10 +1,10 @@
-const Topic = require("../../models/topic");
-const Section = require("../../models/section");
-const User = require("../../models/user");
-const TopicUserProgress = require("../../models/topicUserProgress");
-const transformTopic = require("../merge/topic/transformTopic");
+import Topic from "../../models/topic.js";
+import Section from "../../models/section.js";
+import User from "../../models/user.js";
+import TopicUserProgress from "../../models/topicUserProgress.js";
+import transformTopic from "../../graphql/merge/topic/transformTopic.js";
 
-module.exports = {
+export default {
   topics: async (args, req) => {
     try {
       const topics = await Topic.find();

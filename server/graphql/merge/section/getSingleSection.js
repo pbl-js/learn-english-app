@@ -1,7 +1,7 @@
-const Section = require("../../../models/section");
-const transformSection = require("./transformSection");
+import Section from "../../../models/section.js";
+import transformSection from "./transformSection.js";
 
-module.exports.singleSection = async (sectionId, authData, filter) => {
+export default async (sectionId, authData, filter) => {
   try {
     const section = await Section.findById(sectionId);
     return transformSection(section, authData, filter);

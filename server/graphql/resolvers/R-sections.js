@@ -1,7 +1,7 @@
-const Section = require("../../models/section");
-const transformSection = require("../merge/section/transformSection");
+import Section from "../../models/section.js";
+import transformSection from "../merge/section/transformSection.js";
 
-module.exports = {
+export default {
   sections: async (args, req) => {
     try {
       const sections = await Section.find();
