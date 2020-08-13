@@ -1,5 +1,6 @@
 import Section from "../../models/section.js";
 import transformSection from "../merge/section/transformSection.js";
+import accessLevel from "../../helpers/accessLevel.js";
 
 export default {
   sections: async (args, req) => {
@@ -15,8 +16,12 @@ export default {
   },
 
   createSection: async (args, req) => {
-    if (req.authData.accessLevel < 10 && req.authData.isAuth) {
+    if (!req.authData.isAuth) {
       throw new Error("Unauthenticated!");
+    }
+
+    if (req.authData.accessLevel < accessLevel.superAdmin) {
+      throw new Error("To low access level!");
     }
 
     const section = new Section({

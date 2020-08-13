@@ -2,7 +2,11 @@ import jwt from "jsonwebtoken";
 
 export default (req, res, next) => {
   const authHeader = req.get("Authorization");
-  req.authData = {};
+  req.authData = {
+    isAuth: false,
+    accessLevel: 0,
+    userId: null,
+  };
 
   if (!authHeader) {
     req.authData.isAuth = false;

@@ -3,6 +3,7 @@ import Section from "../../models/section.js";
 import User from "../../models/user.js";
 import TopicUserProgress from "../../models/topicUserProgress.js";
 import transformTopic from "../../graphql/merge/topic/transformTopic.js";
+import accessLevel from "../../helpers/accessLevel.js";
 
 export default {
   topics: async (args, req) => {
@@ -28,8 +29,12 @@ export default {
   },
 
   createTopic: async (args, req) => {
-    if (req.accessLevel < 10 && req.isAuth) {
+    if (!req.authData.isAuth) {
       throw new Error("Unauthenticated!");
+    }
+
+    if (req.authData.accessLevel < accessLevel.superAdmin) {
+      throw new Error("To low access level!");
     }
 
     const topic = new Topic({
@@ -55,8 +60,14 @@ export default {
         const topicUserProgress = new TopicUserProgress({
           userId: user.id,
           topicId: result.id,
-          learningTotal: 100,
-          masteringTotal: 100,
+          learningProgress: {
+            value: 0,
+            total: 0,
+          },
+          masteringProgress: {
+            value: 0,
+            total: 0,
+          },
         });
 
         await topicUserProgress.save();

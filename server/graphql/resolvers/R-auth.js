@@ -29,8 +29,14 @@ export default {
         const topicUserProgress = new TopicUserProgress({
           userId: result.id,
           topicId: topic.id,
-          learningTotal: 100,
-          masteringTotal: 100,
+          learningProgress: {
+            value: 0,
+            total: topic.totalWords,
+          },
+          masteringProgress: {
+            value: 0,
+            total: topic.totalWords,
+          },
         });
 
         await topicUserProgress.save();

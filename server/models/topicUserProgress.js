@@ -28,23 +28,25 @@ const topicUserProgressSchema = new Schema(
       type: Boolean,
       default: false,
     },
-
-    learningValue: {
-      type: Number,
-      default: 0,
+    learningProgress: {
+      value: {
+        type: Number,
+        default: 0,
+      },
+      total: {
+        type: Number,
+        default: 0,
+      },
     },
-    learningTotal: {
-      type: Number,
-      required: true,
-    },
-
-    masteringValue: {
-      type: Number,
-      default: 0,
-    },
-    masteringTotal: {
-      type: Number,
-      required: true,
+    masteringProgress: {
+      value: {
+        type: Number,
+        default: 0,
+      },
+      total: {
+        type: Number,
+        default: 0,
+      },
     },
   },
   { timestamps: true }
