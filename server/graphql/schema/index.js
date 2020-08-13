@@ -19,6 +19,7 @@ type Topic {
   section: Section!
   title: String!
   img: String!
+  totalWords: Int!
 }
 
 type TopicUserProgress {
@@ -33,7 +34,6 @@ type TopicUserProgress {
 
 type Word {
   _id: ID!
-  section: Section!
   topic: Topic!
   img: String!
   eng: String!

@@ -1,6 +1,7 @@
 import Word from "../../models/word.js";
 import Topic from "../../models/topic.js";
 import transformWord from "../merge/word/transformWord.js";
+import accessLevel from "../../helpers/accessLevel.js";
 
 export default {
   words: async () => {
@@ -16,8 +17,12 @@ export default {
   },
 
   createWord: async (args, req) => {
-    if (req.authData.accessLevel < 10 && req.authData.isAuth) {
+    if (!req.authData.isAuth) {
       throw new Error("Unauthenticated!");
+    }
+
+    if (req.authData.accessLevel < accessLevel.superAdmin) {
+      throw new Error("To low access level!");
     }
 
     try {
@@ -34,7 +39,6 @@ export default {
 
       const topic = await Topic.findById(args.wordInput.topic);
 
-      topic.words.push(result.id);
       topic.totalWords = topic.totalWords + 1;
 
       await topic.save();

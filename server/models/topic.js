@@ -22,13 +22,6 @@ const topicSchema = new Schema({
     type: Number,
     default: 0,
   },
-
-  words: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Word",
-    },
-  ],
 });
 
 export default mongoose.model("Topic", topicSchema);
