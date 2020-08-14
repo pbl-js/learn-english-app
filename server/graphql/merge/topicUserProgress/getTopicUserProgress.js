@@ -1,9 +1,9 @@
 import TopicUserProgress from "../../../models/topicUserProgress.js";
 import transformTopicUserProgress from "./transformTopicUserProgress.js";
 
-export default topicUserProgress = async (topicId, authData, filter) => {
+export default async (topicId, authData, filter) => {
   if (!authData.isAuth) {
-    throw new Error("Unauthenticated!");
+    throw new Error("Unauthenticated fro userProgress!");
   }
 
   try {

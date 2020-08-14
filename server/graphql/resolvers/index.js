@@ -1,7 +1,7 @@
 import SectionsResolver from "./R-sections.js";
 import TopicsResolver from "./R-topics.js";
 import WordsResolver from "./R-words.js";
-import TopicsUserProgress from "./R-topicsUserProgress.js";
+// import TopicsUserProgress from "./R-topicsUserProgress.js";
 import AuthResolver from "./R-auth.js";
 
 const rootResolver = {
@@ -9,7 +9,7 @@ const rootResolver = {
   ...SectionsResolver,
   ...TopicsResolver,
   ...WordsResolver,
-  ...TopicsUserProgress,
+  // ...TopicsUserProgress,
 };
 
 export default rootResolver;

@@ -20,6 +20,7 @@ type Topic {
   title: String!
   img: String!
   totalWords: Int!
+  progress: TopicUserProgress!
 }
 
 type TopicUserProgress {
