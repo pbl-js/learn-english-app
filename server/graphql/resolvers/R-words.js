@@ -1,15 +1,17 @@
 import Word from "../../models/word.js";
 import Topic from "../../models/topic.js";
+import User from "../../models/user.js";
+import WordUserProgress from "../../models/wordUserProgress.js";
 import transformWord from "../merge/word/transformWord.js";
 import accessLevel from "../../helpers/accessLevel.js";
 
 export default {
-  words: async () => {
+  words: async (args, req) => {
     try {
       const words = await Word.find();
 
       return words.map((word) => {
-        return transformWord(word);
+        return transformWord(word, req.authData, args.filter);
       });
     } catch (err) {
       throw err;
@@ -35,13 +37,24 @@ export default {
 
       const result = await word.save();
 
-      const createdWord = transformWord(result);
+      const createdWord = transformWord(result, req.authData, args.filter);
 
+      // Update totalWords in topic
       const topic = await Topic.findById(args.wordInput.topic);
-
       topic.totalWords = topic.totalWords + 1;
-
       await topic.save();
+
+      // Create wordUserProgress for all users
+      const allUsers = await User.find();
+
+      for (const user of allUsers) {
+        const wordUserProgress = new WordUserProgress({
+          userId: user.id,
+          wordId: result.id,
+        });
+
+        await wordUserProgress.save();
+      }
 
       return createdWord;
     } catch (err) {

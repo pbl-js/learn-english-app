@@ -39,6 +39,7 @@ type Word {
   img: String!
   eng: String!
   pl: String!
+  progress: WordUserProgress!
 }
 
 type WordUserProgress {

@@ -12,10 +12,6 @@ const wordUserProgressSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Word",
     },
-    seen: {
-      type: Boolean,
-      default: false,
-    },
     started: {
       type: Boolean,
       default: false,
@@ -29,7 +25,7 @@ const wordUserProgressSchema = new Schema(
       default: false,
     },
     learningProgress: {
-      actual: {
+      value: {
         type: Number,
         default: 0,
       },
@@ -39,7 +35,7 @@ const wordUserProgressSchema = new Schema(
       },
     },
     masteringProgress: {
-      actual: {
+      value: {
         type: Number,
         default: 0,
       },
