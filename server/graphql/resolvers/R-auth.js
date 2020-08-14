@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import User from "../../models/user.js";
 import Topic from "../../models/topic.js";
 import TopicUserProgress from "../../models/topicUserProgress.js";
+import Word from "../../models/word.js";
+import WordUserProgress from "../../models/wordUserProgress.js";
 
 export default {
   createUser: async (args) => {
@@ -40,6 +42,18 @@ export default {
         });
 
         await topicUserProgress.save();
+      }
+
+      // Create wordUserProgress for all words
+      const allWords = await Word.find();
+
+      for (const word of allWords) {
+        const wordUserProgress = new WordUserProgress({
+          userId: result.id,
+          wordId: word.id,
+        });
+
+        await wordUserProgress.save();
       }
 
       // GraphQL resault
