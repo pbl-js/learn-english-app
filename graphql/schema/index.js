@@ -20,15 +20,13 @@ type Topic {
   title: String!
   img: String!
   totalWords: Int!
+  defaultStatus: String!
   progress: TopicUserProgress!
 }
 
 type TopicUserProgress {
   topic: Topic!
-  unlock: Boolean!
-  started: Boolean!
-  passed: Boolean!
-  mastering: Boolean!
+  status: String!
   learningProgress: Progress!
   masteringProgress: Progress!
 }
@@ -78,6 +76,7 @@ input TopicInput {
   title: String!
   section: ID!
   img: String!
+  defaultStatus: String
 }
 
 input WordInput {

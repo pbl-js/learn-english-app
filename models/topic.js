@@ -18,6 +18,12 @@ const topicSchema = new Schema({
     required: true,
   },
 
+  defaultStatus: {
+    type: String,
+    enum: ["locked", "normal", "learning", "mastering", "complete"],
+    default: "normal",
+  },
+
   totalWords: {
     type: Number,
     default: 0,

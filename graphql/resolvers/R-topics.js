@@ -41,17 +41,13 @@ export default {
       section: args.topicInput.section,
       title: args.topicInput.title,
       img: args.topicInput.img,
+      defaultStatus: args.topicInput.defaultStatus,
     });
 
     try {
       const result = await topic.save();
 
       const createdTopic = transformTopic(result, req.authData, args.filter);
-
-      // Add relation to section
-      const section = await Section.findById(args.topicInput.section);
-      section.topics.push(result.id);
-      await section.save();
 
       // Generate new topicUserProgress for all users
       const allUsers = await User.find();
@@ -60,6 +56,7 @@ export default {
         const topicUserProgress = new TopicUserProgress({
           userId: user.id,
           topicId: result.id,
+          status: result.defaultStatus,
           learningProgress: {
             value: 0,
             total: 0,

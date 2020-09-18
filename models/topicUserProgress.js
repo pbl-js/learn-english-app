@@ -12,21 +12,10 @@ const topicUserProgressSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Topic",
     },
-    unlock: {
-      type: Boolean,
-      default: false,
-    },
-    started: {
-      type: Boolean,
-      default: false,
-    },
-    passed: {
-      type: Boolean,
-      default: false,
-    },
-    mastering: {
-      type: Boolean,
-      default: false,
+    status: {
+      type: String,
+      enum: ["locked", "normal", "learning", "mastering", "complete"],
+      default: "normal",
     },
     learningProgress: {
       value: {
