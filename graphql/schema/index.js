@@ -43,9 +43,7 @@ type Word {
 type WordUserProgress {
   word: Word!
   topic: Topic!
-  started: Boolean!
-  passed: Boolean!
-  mastering: Boolean!
+  status: String!
   learningProgress: Progress!
   masteringProgress: Progress!
 }
@@ -91,6 +89,7 @@ type RootQuery {
     topics: [Topic!]!
     topicsUserProgress: [TopicUserProgress!]!
     words: [Word!]!
+    wordsByTopicId(topicId: String!): [Word!]!
     singleTopic(topicId: ID!): Topic
     login(email: String!, password: String!): AuthData!
 }

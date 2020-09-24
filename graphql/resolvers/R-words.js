@@ -18,6 +18,18 @@ export default {
     }
   },
 
+  wordsByTopicId: async (args, req) => {
+    try {
+      const words = await Word.find({ topic: { $in: args.topicId } });
+
+      return words.map((word) => {
+        return transformWord(word, req.authData, args.filter);
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+
   createWord: async (args, req) => {
     if (!req.authData.isAuth) {
       throw new Error("Unauthenticated!");

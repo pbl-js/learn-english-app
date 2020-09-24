@@ -12,17 +12,10 @@ const wordUserProgressSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Word",
     },
-    started: {
-      type: Boolean,
-      default: false,
-    },
-    passed: {
-      type: Boolean,
-      default: false,
-    },
-    mastering: {
-      type: Boolean,
-      default: false,
+    status: {
+      type: String,
+      enum: ["unseen", "learning", "mastering", "complete"],
+      default: "unseen",
     },
     learningProgress: {
       value: {
