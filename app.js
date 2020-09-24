@@ -41,7 +41,7 @@ mongoose
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(
-    app.listen(8000, () =>
+    app.listen(process.env.PORT || 8000, () =>
       console.log(`app listen on port 8000. Database is connected`)
     )
   )
