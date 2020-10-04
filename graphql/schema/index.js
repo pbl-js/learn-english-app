@@ -99,6 +99,7 @@ type RootMutation {
   createTopic(topicInput: TopicInput): Topic!
   createWord(wordInput: WordInput): Word!
   createUser(userInput: UserInput): User
+  incrementWordProgress(wordId: ID!): Word!
 }
 
 schema {

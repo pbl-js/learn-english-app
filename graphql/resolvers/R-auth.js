@@ -31,6 +31,7 @@ export default {
         const topicUserProgress = new TopicUserProgress({
           userId: result.id,
           topicId: topic.id,
+          status: topic.defaultStatus,
           learningProgress: {
             value: 0,
             total: topic.totalWords,

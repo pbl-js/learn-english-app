@@ -73,4 +73,49 @@ export default {
       throw err;
     }
   },
+
+  incrementWordProgress: async (args, req) => {
+    console.log("siema");
+    if (!req.authData.isAuth) {
+      throw new Error("Unauthenticated!");
+    }
+
+    const wordProgress = await WordUserProgress.findOne({
+      userId: req.authData.userId,
+      wordId: args.wordId,
+    });
+
+    const status = wordProgress.status;
+
+    if (status === "unseen") {
+      wordProgress.status = "learning";
+    } else if (status === "learning") {
+      wordProgress.learningProgress.value =
+        wordProgress.learningProgress.value + 1;
+      if (
+        wordProgress.learningProgress.value ===
+        wordProgress.learningProgress.total
+      ) {
+        wordProgress.status = "mastering";
+      }
+    } else if (status === "mastering") {
+      wordProgress.masteringProgress.value++;
+      if (
+        wordProgress.masteringProgress.value ===
+        wordProgress.masteringProgress.total
+      ) {
+        wordProgress.status = "complete";
+      }
+    }
+
+    wordProgress.save();
+
+    const word = await Word.findOne({
+      _id: args.wordId,
+    });
+
+    const updatedWord = transformWord(word, req.authData, args.filter);
+
+    return updatedWord;
+  },
 };
