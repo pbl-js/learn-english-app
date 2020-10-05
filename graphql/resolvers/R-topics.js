@@ -75,4 +75,31 @@ export default {
       throw err;
     }
   },
+
+  resetTopicProgress: async (args, req) => {
+    if (!req.authData.isAuth) {
+      throw new Error("Unauthenticated!");
+    }
+
+    const topicProgress = await TopicUserProgress.findOne({
+      userId: req.authData.userId,
+      topicId: args.topicId,
+    });
+
+    topicProgress.status = "normal";
+    topicProgress.learningProgress.value = 0;
+    topicProgress.masteringProgress.value = 0;
+
+    topicProgress.save();
+
+    const topic = await Topic.findOne({
+      _id: args.topicId,
+    });
+
+    console.log(topic);
+
+    const updatedTopic = transformTopic(topic, req.authData, args.filter);
+
+    return updatedTopic;
+  },
 };

@@ -100,6 +100,8 @@ type RootMutation {
   createWord(wordInput: WordInput): Word!
   createUser(userInput: UserInput): User
   incrementWordProgress(wordId: ID!): Word!
+  resetTopicProgress(topicId: ID!): Topic!
+  resetWordProgress(topicId: ID, wordId: ID): Word!
 }
 
 schema {
