@@ -96,8 +96,6 @@ export default {
       _id: args.topicId,
     });
 
-    console.log(topic);
-
     const updatedTopic = transformTopic(topic, req.authData, args.filter);
 
     return updatedTopic;

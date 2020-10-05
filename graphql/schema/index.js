@@ -101,7 +101,8 @@ type RootMutation {
   createUser(userInput: UserInput): User
   incrementWordProgress(wordId: ID!): Word!
   resetTopicProgress(topicId: ID!): Topic!
-  resetWordProgress(topicId: ID, wordId: ID): Word!
+  resetWordProgressByWordId(wordId: ID!): Word!
+  resetWordProgressByTopicId(topicId: ID!): [Word!]!
 }
 
 schema {

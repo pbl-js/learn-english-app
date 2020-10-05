@@ -75,7 +75,6 @@ export default {
   },
 
   incrementWordProgress: async (args, req) => {
-    console.log("siema");
     if (!req.authData.isAuth) {
       throw new Error("Unauthenticated!");
     }
@@ -107,6 +106,31 @@ export default {
         wordProgress.status = "complete";
       }
     }
+
+    wordProgress.save();
+
+    const word = await Word.findOne({
+      _id: args.wordId,
+    });
+
+    const updatedWord = transformWord(word, req.authData, args.filter);
+
+    return updatedWord;
+  },
+
+  resetWordProgressByWordId: async (args, req) => {
+    if (!req.authData.isAuth) {
+      throw new Error("Unauthenticated!");
+    }
+
+    const wordProgress = await WordUserProgress.findOne({
+      userId: req.authData.userId,
+      wordId: args.wordId,
+    });
+
+    wordProgress.status = "unseen";
+    wordProgress.learningProgress.value = 0;
+    wordProgress.masteringProgress.value = 0;
 
     wordProgress.save();
 
