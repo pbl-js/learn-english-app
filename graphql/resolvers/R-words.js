@@ -142,4 +142,31 @@ export default {
 
     return updatedWord;
   },
+
+  resetWordProgressByTopicId: async (args, req) => {
+    if (!req.authData.isAuth) {
+      throw new Error("Unauthenticated!");
+    }
+
+    const words = await Word.find({ topic: args.topicId });
+
+    const wordsId = words.map((word) => word._id);
+
+    const wordsProgress = await WordUserProgress.find({
+      userId: req.authData.userId,
+      wordId: wordsId,
+    });
+
+    wordsProgress.forEach((wordProgress) => {
+      wordProgress.status = "unseen";
+      wordProgress.learningProgress.value = 0;
+      wordProgress.masteringProgress.value = 0;
+
+      wordProgress.save();
+    });
+
+    return words.map((word) => {
+      return transformWord(word, req.authData, args.filter);
+    });
+  },
 };
