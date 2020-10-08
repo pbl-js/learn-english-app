@@ -76,6 +76,51 @@ export default {
     }
   },
 
+  incrementTopicProgress: async (args, req) => {
+    if (!req.authData.isAuth) {
+      throw new Error("Unauthenticated!");
+    }
+
+    const topicProgress = await TopicUserProgress.findOne({
+      userId: req.authData.userId,
+      topicId: args.topicId,
+    });
+
+    const topicStatus = topicProgress.status;
+
+    if (topicStatus === "normal") {
+      topicProgress.status = "learning";
+    } else if (topicStatus === "learning") {
+      if (
+        topicProgress.learningProgress.value ===
+        topicProgress.learningProgress.total
+      ) {
+        topicProgress.status = "mastering";
+      } else {
+        topicProgress.learningProgress.value =
+          topicProgress.learningProgress.value + 1;
+      }
+    } else if (topicStatus === "mastering") {
+      if (
+        topicProgress.masteringProgress.value ===
+        topicProgress.masteringProgress.total
+      ) {
+        topicProgress.status = "complete";
+      } else {
+        topicProgress.masteringProgress.value =
+          topicProgress.masteringProgress.value + 1;
+      }
+    }
+
+    topicProgress.save();
+
+    const topic = await Topic.findOne({
+      _id: args.topicId,
+    });
+
+    return transformTopic(topic, req.authData, args.filter);
+  },
+
   resetTopicProgress: async (args, req) => {
     if (!req.authData.isAuth) {
       throw new Error("Unauthenticated!");

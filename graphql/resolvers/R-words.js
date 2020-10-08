@@ -88,6 +88,7 @@ export default {
 
     if (status === "unseen") {
       wordProgress.status = "learning";
+      wordProgress.learningProgress.value = 1;
     } else if (status === "learning") {
       wordProgress.learningProgress.value =
         wordProgress.learningProgress.value + 1;
@@ -96,6 +97,7 @@ export default {
         wordProgress.learningProgress.total
       ) {
         wordProgress.status = "mastering";
+        wordProgress.masteringProgress.value = 1;
       }
     } else if (status === "mastering") {
       wordProgress.masteringProgress.value++;
