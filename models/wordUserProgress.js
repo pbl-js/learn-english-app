@@ -24,7 +24,7 @@ const wordUserProgressSchema = new Schema(
       },
       total: {
         type: Number,
-        default: 100,
+        default: 20,
       },
     },
     masteringProgress: {
@@ -34,7 +34,7 @@ const wordUserProgressSchema = new Schema(
       },
       total: {
         type: Number,
-        default: 100,
+        default: 20,
       },
     },
   },
