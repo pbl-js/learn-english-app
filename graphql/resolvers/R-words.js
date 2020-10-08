@@ -2,6 +2,7 @@ import Word from "../../models/word.js";
 import Topic from "../../models/topic.js";
 import User from "../../models/user.js";
 import WordUserProgress from "../../models/wordUserProgress.js";
+import TopicUserProgress from "../../models/topicUserProgress.js";
 import transformWord from "../merge/word/transformWord.js";
 import accessLevel from "../../helpers/accessLevel.js";
 
@@ -56,9 +57,23 @@ export default {
       topic.totalWords = topic.totalWords + 1;
       await topic.save();
 
-      // Create wordUserProgress for all users
+      // Update topicUserProgress for all users
       const allUsers = await User.find();
 
+      const topicsUserProgress = await TopicUserProgress.find({
+        topicId: args.wordInput.topic,
+      });
+
+      for (const topicUserProgress of topicsUserProgress) {
+        topicUserProgress.learningProgress.total =
+          topicUserProgress.learningProgress.total + 1;
+        topicUserProgress.masteringProgress.total =
+          topicUserProgress.masteringProgress.total + 1;
+
+        await topicUserProgress.save();
+      }
+
+      // Create wordUserProgress for all users
       for (const user of allUsers) {
         const wordUserProgress = new WordUserProgress({
           userId: user.id,

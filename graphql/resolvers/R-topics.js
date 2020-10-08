@@ -90,12 +90,14 @@ export default {
 
     if (topicStatus === "normal") {
       topicProgress.status = "learning";
+      topicProgress.learningProgress.value = 1;
     } else if (topicStatus === "learning") {
       if (
         topicProgress.learningProgress.value ===
         topicProgress.learningProgress.total
       ) {
         topicProgress.status = "mastering";
+        topicProgress.masteringProgress.value = 1;
       } else {
         topicProgress.learningProgress.value =
           topicProgress.learningProgress.value + 1;
