@@ -84,6 +84,11 @@ input WordInput {
   pl: String!
 }
 
+type ResetTopicProgressReturn {
+  topic: Topic!
+  words: [Word!]!
+}
+
 type RootQuery {
     sections: [Section!]!
     topics: [Topic!]!
@@ -99,7 +104,7 @@ type RootMutation {
   createTopic(topicInput: TopicInput): Topic!
   createWord(wordInput: WordInput): Word!
   createUser(userInput: UserInput): User
-  resetTopicProgress(topicId: ID!): Topic!
+  resetTopicProgress(topicId: ID!): ResetTopicProgressReturn!
   incrementTopicProgress(topicId: ID!): Topic!
   incrementWordProgress(wordId: ID!): Word!
   resetWordProgressByWordId(wordId: ID!): Word!

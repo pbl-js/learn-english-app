@@ -1,9 +1,11 @@
 import Topic from "../../models/topic.js";
-import Section from "../../models/section.js";
 import User from "../../models/user.js";
 import TopicUserProgress from "../../models/topicUserProgress.js";
 import transformTopic from "../../graphql/merge/topic/transformTopic.js";
 import accessLevel from "../../helpers/accessLevel.js";
+import WordUserProgress from "../../models/wordUserProgress.js";
+import Word from "../../models/word.js";
+import transformWord from "../merge/word/transformWord.js";
 
 export default {
   topics: async (args, req) => {
@@ -145,6 +147,30 @@ export default {
 
     const updatedTopic = transformTopic(topic, req.authData, args.filter);
 
-    return updatedTopic;
+    // Reset wordsProgress
+    const words = await Word.find({ topic: args.topicId });
+
+    const wordIds = words.map((word) => word._id);
+    const wordsProgress = await WordUserProgress.find({
+      wordId: wordIds,
+      userId: req.authData.userId,
+    });
+
+    wordsProgress.forEach((progressItem) => {
+      progressItem.status = "unseen";
+      progressItem.learningProgress.value = 0;
+      progressItem.masteringProgress.value = 0;
+
+      progressItem.save();
+    });
+
+    const updatedWords = words.map((word) => {
+      return transformWord(word, req.authData);
+    });
+
+    return {
+      topic: updatedTopic,
+      words: updatedWords,
+    };
   },
 };
