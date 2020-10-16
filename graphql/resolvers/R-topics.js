@@ -30,6 +30,25 @@ export default {
     }
   },
 
+  topicsOnlyWithProgress: async (args, req) => {
+    try {
+      const topicsProgress = await TopicUserProgress.find({
+        userId: req.authData.userId,
+        status: { $in: ["learning", "mastering", "completed"] },
+      });
+
+      const ids = topicsProgress.map((item) => item.topicId);
+
+      const topics = await Topic.find({
+        _id: { $in: ids },
+      });
+
+      return topics.map((topic) => transformTopic(topic, req.authData));
+    } catch (err) {
+      throw err;
+    }
+  },
+
   createTopic: async (args, req) => {
     if (!req.authData.isAuth) {
       throw new Error("Unauthenticated!");

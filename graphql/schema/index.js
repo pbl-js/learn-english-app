@@ -96,6 +96,7 @@ type RootQuery {
     words: [Word!]!
     wordsByTopicId(topicId: String!): [Word!]!
     singleTopic(topicId: ID!): Topic
+    topicsOnlyWithProgress: [Topic!]!
     login(email: String!, password: String!): AuthData!
 }
 
