@@ -57,11 +57,25 @@ export default {
         await wordUserProgress.save();
       }
 
+      //Gen token
+      const token = jwt.sign(
+        {
+          userId: result.id,
+          email: result._doc.email,
+          accessLevel: result._doc.accessLevel,
+        },
+        "somesupersecretkey",
+        {
+          expiresIn: "1hr",
+        }
+      );
+
       // GraphQL resault
       return {
         ...result._doc,
         password: null,
         _id: result.id,
+        token,
       };
     } catch (err) {
       throw err;

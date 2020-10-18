@@ -52,6 +52,7 @@ type User {
   _id: ID!
   email: String!
   password: String
+  token: String
 }
 
 type AuthData {
